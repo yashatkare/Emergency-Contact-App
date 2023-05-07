@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emergency Contacts App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .timer {
+            font-size: 48px;
+            text-align: center;
+margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Emergency Contacts App</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Add Emergency Contact</h2>
+            <form method="POST" action="/">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Contact</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2>Emergency Contacts</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact[1] }}</td>
+                        <td>{{ contact[2] }}</td>
+                        <td>
+                            <form method="POST" action="/delete">
+                                <input type="hidden" name="contact_id" value="{{ contact[0] }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" action="/emergency">
+                <button type="submit" class="btn btn-danger">EMERGENCY!</button>
+            </form>
+            <div class="timer" id="timer"></div>
+            <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;">Cancel</button>
+        </div>
+    </div>
+</div>
+<script>
+    var timer = 10;
+    var countdown;
+    var cancelBtn = document.getElementById("cancelBtn");
+
+    function startTimer() {
+        countdown = setInterval(function() {
+            timer--;
+            document.getElementById("timer").innerHTML = timer + "s";
+            if (timer === 0) {
+                clearInterval(countdown);
+                document.getElementById("timer").innerHTML = "Sending emergency message...";
+                sendEmergencyMessage();
+            }
+        }, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(countdown);
+        timer = 10;
+        document.getElementById("timer").innerHTML = "";
+        cancelBtn.style.display = "none";
+    }
+
+    function sendEmergencyMessage() {
+        $.ajax({
+            url: '/emergency',
+            type: 'POST',
+            success: function(response) {
+                stopTimer();
+            }
+        });
+    }
+
+    document.getElementById("cancelBtn").addEventListener("click", function() {
+        stopTimer();
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.keyCode === 27) {
+            stopTimer();
+        }
+    });
+
+    document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+            stopTimer();
+        }
+    });
+
+    startTimer();
+    cancelBtn.style.display = "block";
+</script>
+</body>
+</html>    
