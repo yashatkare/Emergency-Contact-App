@@ -56,6 +56,6 @@ Code for sending WhatsApp message
 ![1](4.png)
 Code for sending a pre-written WhatsApp message to all saved emergency contacts
 
-##Contributors
+## Contributors
 
 This project was created by *Yashkumar Atkare*. If you have any questions or suggestions for improvement, please contact me at yashatkare9@gmail.com. Thank you for using the Emergency Contact App!
