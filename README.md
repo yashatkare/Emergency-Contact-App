@@ -41,8 +41,8 @@ The Emergency Contact App is built using the following technologies:
 Here are some screenshots of the Emergency Contact App:
 
 Project starting on cmd
-![1](1.png)
-Starting the app on command prompt
+![1](1.png "Starting the app on command prompt")
+
 
 Home screen
 ![1](2.png)
