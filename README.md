@@ -41,18 +41,22 @@ The Emergency Contact App is built using the following technologies:
 Here are some screenshots of the Emergency Contact App:
 
 Project starting on cmd
-![1](1.png "Starting the app on command prompt")
 
+![1](1.png "Starting the app on command prompt")
+Starting the app on command prompt
 
 Home screen
+
 ![1](2.png)
 Home screen displaying emergency contacts and options to add or change contacts
 
 Timer screen
+
 ![1](3.png)
 Timer screen displayed after clicking the "Emergency!" button
 
 Code for sending WhatsApp message
+
 ![1](4.png)
 Code for sending a pre-written WhatsApp message to all saved emergency contacts
 
